@@ -4,8 +4,9 @@ var route=express();
 var Utilisateur=require("./utilisateur");
 
 route.post("/",function (req,res) {
-    console.log(req.param('user'))
-    Utilisateur.find(function (err,docs) {
+    var user =req.query.user;
+    var passw=req.query.pass;
+    Utilisateur.find({login:user,pass:passw},function (err,docs) {
         if(err){res.status(500).send({500:'probleme...'});}
         if(!docs){res.status(400).send({404:'not found'});}
         res.status(200).send(docs);
